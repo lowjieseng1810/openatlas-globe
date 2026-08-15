@@ -12,23 +12,35 @@
 
 html, body {
   margin: 0;
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
   background: #02060c;
   color: var(--text);
 }
 
 .page {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
-  min-height: 100vh;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 .sidebar {
-  padding: 28px 24px 40px;
+  padding: 22px 20px 28px;
   background: linear-gradient(180deg, rgba(10, 22, 34, 0.96), rgba(5, 10, 16, 0.96));
   border-right: 1px solid rgba(215, 180, 92, 0.18);
   overflow: auto;
   z-index: 8;
+}
+
+.stage-wrap {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #102033, #02060c 70%);
 }
 
 .sidebar h1 {
@@ -92,12 +104,6 @@ pre {
   overflow: auto;
   font-size: 0.78rem;
   color: #d7e6f5;
-}
-
-.stage-wrap {
-  position: relative;
-  min-height: 100vh;
-  background: radial-gradient(circle at 50% 45%, #102033, #02060c 70%);
 }
 
 #globe-stage {
@@ -172,13 +178,18 @@ pre {
 }
 
 @media (max-width: 900px) {
+  html, body { overflow: auto; }
   .page {
     grid-template-columns: 1fr;
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
   }
   .sidebar {
-    max-height: 42vh;
+    max-height: 34vh;
   }
   .stage-wrap {
-    min-height: 58vh;
+    min-height: 66vh;
+    height: 66vh;
   }
 }

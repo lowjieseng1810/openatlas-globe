@@ -35,4 +35,4 @@ This project does **not** invent an upstream license for those copied files.
 
 ## Demo data
 
-`public/data/example-malaysia-languages.json` uses approximate community coordinates from the original `language-universe.js` overlay. It is example geographic data only.
+`public/data/example-cities.json` is invented demo geography for the generic marker system. It is not a language map.

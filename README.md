@@ -6,6 +6,8 @@ This is not a from-scratch globe. The renderer is the World Explorer Earth imple
 
 ## Demo
 
+**Live Demo:** https://lowjieseng1810.github.io/openatlas-globe/
+
 ```bash
 npm install
 npm run dev
@@ -22,7 +24,7 @@ Live origin of the source experience: [https://malaysialinguisticlab.com/](https
 - Multi-layer starfield and faint nebula
 - ACES filmic tone mapping and directional lighting
 - Pointer drag with inertia; optional cinematic fly-to
-- JSON lat/lon markers projected onto the globe
+- JSON lat/lon markers projected onto the globe (default demo uses generic cities, not a language map)
 - Responsive layout (sidebar stacks on small screens)
 - No server, database, login, or AI API
 
@@ -90,7 +92,7 @@ Generic points, not a Malaysia-only schema:
 ]
 ```
 
-Replace `public/data/example-malaysia-languages.json` with your own file. The bundled Malaysia language coordinates are **demo data** copied from the original explorer overlay and are not linguistic authority.
+Replace `public/data/example-cities.json` with your own file. Default markers are generic cities for the reusable marker system, not a language map.
 
 ## Customization
 
@@ -117,9 +119,13 @@ openatlas-globe/
   LICENSE
 ```
 
+## Screenshots
+
+Add screenshots under `docs/screenshots/` when available.
+
 ## Examples
 
-- **Language locations** — bundled demo JSON (Malaysia minority languages, labeled as example data).
+- **Generic cities** — bundled `example-cities.json` (Cairo, Reykjavík, Wellington) to demonstrate lat/lon markers.
 - **Cultural heritage / migration / education / research / historical routes** — same JSON shape; only coordinates and copy change.
 
 ## Performance

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cairo",
+    "name": "Cairo",
+    "lat": 30.04,
+    "lon": 31.24,
+    "category": "city",
+    "summary": "Example geographic point. Replace this JSON with any lat/lon dataset."
+  },
+  {
+    "id": "reykjavik",
+    "name": "Reykjavík",
+    "lat": 64.15,
+    "lon": -21.94,
+    "category": "city",
+    "summary": "Example geographic point for the generic marker system."
+  },
+  {
+    "id": "wellington",
+    "name": "Wellington",
+    "lat": -41.29,
+    "lon": 174.78,
+    "category": "city",
+    "summary": "Example geographic point. Not tied to a specific language project."
+  }
+]

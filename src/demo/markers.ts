@@ -7,7 +7,7 @@ export async function mountDemoMarkers(): Promise<void> {
     return;
   }
 
-  const response = await fetch(`${import.meta.env.BASE_URL}data/example-malaysia-languages.json`);
+  const response = await fetch(`${import.meta.env.BASE_URL}data/example-cities.json`);
   const points = parseGeoDataset(await response.json());
 
   const layer = document.createElement("div");

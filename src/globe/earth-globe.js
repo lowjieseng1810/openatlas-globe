@@ -540,7 +540,7 @@ globeContainer.style.right =
     "0";
 
 globeContainer.style.top =
-    "-40px";
+    "0";
 
 globeContainer.style.bottom =
     "0";
@@ -2566,12 +2566,12 @@ earthSystem.rotation.z =
     }
 
     /* Soft Malaysia focus is part of the initial WORLD scene. */
-    revealMalaysiaMarker();
+    /* Default OpenAtlas demo uses generic HTML markers instead. */
 
     window.addEventListener(
         "earthMalaysiaFlightComplete",
         function () {
-            revealMalaysiaMarker();
+            /* Keep the 3D pin optional; generic JSON markers remain the default. */
         }
     );
 
@@ -2823,7 +2823,8 @@ earthSystem.rotation.y =
         */
 
         if (
-            rawProgress >= 0.48
+            rawProgress >= 0.48 &&
+            globeOptions.showFocusMarker
         ) {
             revealMalaysiaMarker();
         }
@@ -2988,13 +2989,18 @@ console.log(
 
         /* Size from the WebGL container itself so camera aspect
            matches the displayed canvas box (prevents oval Earth). */
+        const vv = window.visualViewport;
         const width =
             globeContainer.clientWidth ||
-            globeStage.clientWidth;
+            globeStage.clientWidth ||
+            (vv && vv.width) ||
+            window.innerWidth;
 
         const height =
             globeContainer.clientHeight ||
-            globeStage.clientHeight;
+            globeStage.clientHeight ||
+            (vv && vv.height) ||
+            window.innerHeight;
 
         if (!width || !height) {
             return;
@@ -3010,6 +3016,13 @@ console.log(
         renderer.domElement.style.height = "100%";
         renderer.domElement.style.display = "block";
         renderer.domElement.style.aspectRatio = "auto";
+
+        const minDim = Math.min(width, height);
+        const fit = Math.min(1.12, Math.max(0.78, minDim / 780));
+        if (typeof earthSystem !== "undefined" && earthSystem) {
+            earthSystem.scale.setScalar(fit);
+            earthSystem.position.set(width < 720 ? 0 : 0.06, 0, 0);
+        }
     }
 
 
