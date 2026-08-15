@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenAtlas Globe</title>
+  </head>
+  <body>
+    <div class="page">
+      <aside class="sidebar">
+        <p class="eyebrow">Open-source geographic globe</p>
+        <h1>OpenAtlas Globe</h1>
+        <p>
+          A reusable 3D Earth extracted from the World Explorer in
+          <a href="https://github.com/lowjieseng1810/malaysia-linguistics-lab">Malaysia Linguistics Lab</a>.
+          Drag to rotate. Use the flight control to approach an example region.
+        </p>
+        <div class="cta-row">
+          <button id="explore-world-button" type="button">Fly to example region</button>
+          <a class="ghost" href="https://github.com/lowjieseng1810/openatlas-globe">GitHub</a>
+        </div>
+        <h2>Features</h2>
+        <ul>
+          <li>Cinematic Earth, atmosphere, clouds, and starfield</li>
+          <li>Pointer drag with inertia</li>
+          <li>Generic lat/lon markers from JSON</li>
+          <li>No backend, database, auth, or AI</li>
+        </ul>
+        <h2>Quick start</h2>
+        <pre>npm install
+npm run dev</pre>
+        <h2>Data format</h2>
+        <pre>[
+  {
+    "id": "example",
+    "name": "Example",
+    "lat": 1.3,
+    "lon": 103.8,
+    "category": "city",
+    "summary": "Any geographic point"
+  }
+]</pre>
+        <p>
+          The Malaysia language points in this demo are labeled example data only.
+          OpenAtlas Globe is not a Malaysia-specific product.
+        </p>
+      </aside>
+      <div class="stage-wrap">
+        <div id="globe-stage" aria-label="Interactive Earth globe">
+          <div id="three-globe-container" aria-hidden="true"></div>
+        </div>
+        <div class="globe-status" id="globe-status">
+          <span class="globe-status-dot" aria-hidden="true"></span>
+          <span id="globe-status-text">Loading Earth</span>
+        </div>
+        <aside id="marker-detail" hidden></aside>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

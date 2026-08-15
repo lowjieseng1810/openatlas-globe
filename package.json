@@ -1,0 +1,22 @@
+{
+  "name": "openatlas-globe",
+  "version": "0.1.0",
+  "description": "Reusable 3D Earth globe extracted from Malaysia Linguistics Lab World Explorer",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "three": "0.128.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.9"
+  }
+}

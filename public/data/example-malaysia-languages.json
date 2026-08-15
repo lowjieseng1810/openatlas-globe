@@ -1,0 +1,34 @@
+[
+  {
+    "id": "iban",
+    "name": "Iban",
+    "lat": 2.3,
+    "lon": 113.0,
+    "category": "language",
+    "summary": "DEMO DATA: approximate community location used in Malaysia Linguistics Lab. Not a linguistic claim."
+  },
+  {
+    "id": "kadazan-dusun",
+    "name": "Kadazan-Dusun",
+    "lat": 5.9,
+    "lon": 116.2,
+    "category": "language",
+    "summary": "DEMO DATA: approximate community location used in Malaysia Linguistics Lab. Not a linguistic claim."
+  },
+  {
+    "id": "bidayuh",
+    "name": "Bidayuh",
+    "lat": 1.35,
+    "lon": 110.35,
+    "category": "language",
+    "summary": "DEMO DATA: approximate community location used in Malaysia Linguistics Lab. Not a linguistic claim."
+  },
+  {
+    "id": "mah-meri",
+    "name": "Mah Meri",
+    "lat": 2.86,
+    "lon": 101.35,
+    "category": "language",
+    "summary": "DEMO DATA: approximate community location used in Malaysia Linguistics Lab. Not a linguistic claim."
+  }
+]
