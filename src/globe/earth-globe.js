@@ -1363,9 +1363,9 @@ const earthMaterial =
 
 
                 dayColor *=
-    0.18 +
+    0.095 +
     softDiffuse *
-    1.08;
+    1.04;
 
 
                 dayColor *=
@@ -1412,22 +1412,22 @@ const earthMaterial =
                    TRUE DARK SIDE
                    ================================= */
 
-                /* Night keeps geographic albedo readable instead of
-                   collapsing to a black hemisphere. */
+                /* Night is clearly darker than day, but albedo stays
+                   readable instead of collapsing to a black disc. */
                 vec3 darkEarth =
                     rawDay *
                     vec3(
-                        0.20,
-                        0.23,
-                        0.30
+                        0.045,
+                        0.065,
+                        0.10
                     );
 
 
                 darkEarth +=
                     vec3(
-                        0.012,
-                        0.022,
-                        0.045
+                        0.004,
+                        0.008,
+                        0.018
                     );
 
 
@@ -1439,7 +1439,7 @@ const earthMaterial =
                     1.0 -
                     smoothstep(
                         0.0,
-                        0.18,
+                        0.12,
                         abs(
                             NdotL
                         )
@@ -1448,12 +1448,12 @@ const earthMaterial =
 
                 vec3 terminatorGlow =
                     vec3(
-                        0.55,
-                        0.22,
-                        0.06
+                        0.30,
+                        0.055,
+                        0.008
                     ) *
                     terminator *
-                    0.28;
+                    0.15;
 
 
                 /* =================================
@@ -1655,7 +1655,7 @@ const atmosphereMaterial =
                     vec3(0.62, 0.82, 1.0);
 
                 vec3 nightColor =
-                    vec3(0.28, 0.42, 0.68);
+                    vec3(0.22, 0.38, 0.62);
 
                 vec3 atmosphereColor =
                     mix(
@@ -1683,8 +1683,8 @@ const atmosphereMaterial =
                 float alpha =
                     rim *
                     (
-                        0.07 +
-                        daylight * 0.10
+                        0.055 +
+                        daylight * 0.11
                     );
 
                 alpha +=
@@ -2199,18 +2199,19 @@ earthSystem.rotation.z =
             const deltaY = event.clientY - previousPointerY;
 
             if (heroState === HERO_STATE.REVEAL) {
-                /* Grab-to-rotate: drag left → surface moves left. */
+                /* Grab-to-rotate the Earth group after fly-to. */
                 revealUserInteracted = true;
-                revealSpinYaw -= deltaX * 0.0042;
+                revealSpinYaw += deltaX * 0.0042;
                 revealSpinPitch += deltaY * 0.0032;
                 revealSpinPitch = Math.max(
                     -0.45,
                     Math.min(0.45, revealSpinPitch)
                 );
-                dragVelocityYaw = -deltaX * 0.00038;
+                dragVelocityYaw = deltaX * 0.00038;
                 dragVelocityPitch = deltaY * 0.0003;
             } else {
-                /* Orbit yaw: drag left → Earth content follows left. */
+                /* Grab-the-globe (front face): drag left → surface follows left.
+                   Camera yaw increases as the pointer moves left. */
                 targetYaw -= deltaX * 0.0028;
                 targetPitch += deltaY * 0.0022;
                 targetPitch = Math.max(
@@ -3397,11 +3398,6 @@ if (heroLoaded) {
                 targetPitch += dragVelocityPitch;
                 dragVelocityYaw *= 0.92;
                 dragVelocityPitch *= 0.92;
-
-                targetYaw +=
-                    Math.sin(time * 0.00012) * 0.00012;
-                targetPitch +=
-                    Math.cos(time * 0.00009) * 0.00006;
             }
 
             targetPitch = Math.max(-0.60, Math.min(0.60, targetPitch));

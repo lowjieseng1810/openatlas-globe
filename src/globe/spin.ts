@@ -1,5 +1,6 @@
 /** Slow cinematic spin around Earth's polar axis (radians per second). */
-export const AUTO_ROTATE_RAD_PER_SEC = 0.016;
+/** Matches the original ~0.00055 rad/frame idle spin at 60fps. */
+export const AUTO_ROTATE_RAD_PER_SEC = 0.033;
 
 export function shouldAutoRotateEarth(options: {
   enabled: boolean;
