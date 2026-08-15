@@ -36,15 +36,11 @@ Then open the URL Vite prints (default `http://127.0.0.1:5173`).
 
 ## Screenshots / Media
 
-This repository does not currently include separate README screenshots or demo videos. Runtime Earth maps live under `public/textures/earth/` (`earth_day_8k.jpg`, `earth_normal.jpg`, `earth_specular.jpg`, `earth_clouds.png`) and are loaded by the globe, not shown as documentation images.
-
-If you add overview captures later, keep repository-relative Markdown such as:
-
-```md
 ![OpenAtlas Globe overview](openatlas-globe-overview.png)
-```
 
-GitHub README Markdown does not play arbitrary `.mp4` / `.webm` / `.mov` files inline. Link the file instead, for example `[Watch the demo](openatlas-globe-demo.mp4)`.
+![OpenAtlas Globe Earth](openatlas-globe-earth.png)
+
+GitHub README Markdown does not play video files inline. Watch the short capture here: [openatlas-globe-demo.mp4](openatlas-globe-demo.mp4).
 
 ## Quick Start
 
