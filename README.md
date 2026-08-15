@@ -44,9 +44,11 @@ Then open the URL Vite prints (default `http://127.0.0.1:5173`).
 
 Watch the interactive globe demo.
 
-GitHub’s README renderer does **not** provide reliable inline playback for an MP4 stored in this repository (relative `<video>` tags are sanitized, and Markdown image syntax only works for images). Open the file directly:
+GitHub’s README renderer does **not** provide reliable inline playback for an MP4 stored in this repository. Relative `<video>` tags are sanitized, Markdown image syntax only works for images, and GitHub’s file preview page refuses this ~14 MB MP4 (“we can’t show files that are this big right now”).
 
-**[▶ Demo Video (`openatlas-globe-demo.mp4`)](./openatlas-globe-demo.mp4)**
+Use the raw file (browser download / native player):
+
+**[▶ Demo Video (`openatlas-globe-demo.mp4`)](https://github.com/lowjieseng1810/openatlas-globe/raw/main/openatlas-globe-demo.mp4)**
 
 ## Quick Start
 
