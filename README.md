@@ -34,13 +34,19 @@ npm run dev
 
 Then open the URL Vite prints (default `http://127.0.0.1:5173`).
 
-## Screenshots / Media
+## Screenshots
 
-![OpenAtlas Globe overview](openatlas-globe-overview.png)
+![OpenAtlas Globe overview](./openatlas-globe-overview.png)
 
-![OpenAtlas Globe Earth](openatlas-globe-earth.png)
+![OpenAtlas Globe Earth](./openatlas-globe-earth.png)
 
-GitHub README Markdown does not play video files inline. Watch the short capture here: [openatlas-globe-demo.mp4](openatlas-globe-demo.mp4).
+## Demo Video
+
+Watch the interactive globe demo.
+
+GitHub’s README renderer does **not** provide reliable inline playback for an MP4 stored in this repository (relative `<video>` tags are sanitized, and Markdown image syntax only works for images). Open the file directly:
+
+**[▶ Demo Video (`openatlas-globe-demo.mp4`)](./openatlas-globe-demo.mp4)**
 
 ## Quick Start
 
