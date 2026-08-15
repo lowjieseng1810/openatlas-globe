@@ -1,12 +1,31 @@
 # OpenAtlas Globe
 
-Reusable 3D Earth for geographic visualization. Drag to orbit, fly to a focus region, and plot generic lat/lon points — without a backend.
+An open-source, reusable 3D Earth for geographic exploration.
 
-This is not a from-scratch globe. The renderer is the World Explorer Earth implementation from Malaysia Linguistics Lab, extracted so it can run as a standalone Vite app.
+Interactive Three.js globe with realistic terrain and ocean textures, atmosphere, clouds, stars, automatic axial rotation, and a spherical day/night terminator. Plot generic lat/lon markers from JSON — no backend required.
+
+## What it is
+
+OpenAtlas Globe is a standalone Vite demo of a cinematic Earth renderer. Use it as a geographic visualization component: drag to orbit, fly to a region, drop JSON markers, and keep the planet spinning under simulated sunlight.
+
+It is not a language-learning app and does not ship Malaysia-specific course data.
+
+## Features
+
+- Interactive 3D Earth (Three.js)
+- Realistic day, normal, specular, and cloud textures
+- Atmosphere (inner + outer Fresnel limb)
+- Cloud layer and starfield
+- Automatic Earth-axis rotation (optional, pause while dragging)
+- Real-time day/night lighting with a spherical terminator
+- Geographic markers from JSON
+- Responsive layout (sidebar stacks on small screens)
+- GitHub Pages static deploy
+- No server, database, login, or AI API
 
 ## Demo
 
-**Live Demo:** https://lowjieseng1810.github.io/openatlas-globe/
+**Live demo:** https://lowjieseng1810.github.io/openatlas-globe/
 
 ```bash
 npm install
@@ -15,27 +34,19 @@ npm run dev
 
 Then open the URL Vite prints (default `http://127.0.0.1:5173`).
 
-Live origin of the source experience: [https://malaysialinguisticlab.com/](https://malaysialinguisticlab.com/)
+## Screenshots / Media
 
-## Features
+This repository does not currently include separate README screenshots or demo videos. Runtime Earth maps live under `public/textures/earth/` (`earth_day_8k.jpg`, `earth_normal.jpg`, `earth_specular.jpg`, `earth_clouds.png`) and are loaded by the globe, not shown as documentation images.
 
-- Cinematic Earth with day texture, specular/normal maps, and cloud layer
-- Atmosphere (inner + outer Fresnel limb)
-- Multi-layer starfield and faint nebula
-- ACES filmic tone mapping and directional lighting
-- Pointer drag with inertia; optional cinematic fly-to
-- JSON lat/lon markers projected onto the globe (default demo uses generic cities, not a language map)
-- Responsive layout (sidebar stacks on small screens)
-- No server, database, login, or AI API
+If you add overview captures later, keep repository-relative Markdown such as:
 
-## Technology
+```md
+![OpenAtlas Globe overview](openatlas-globe-overview.png)
+```
 
-- TypeScript (demo shell, data helpers, tests)
-- Three.js `0.128.0` (same generation as the original CDN `r128` build)
-- Vite
-- HTML/CSS for the demo chrome
+GitHub README Markdown does not play arbitrary `.mp4` / `.webm` / `.mov` files inline. Link the file instead, for example `[Watch the demo](openatlas-globe-demo.mp4)`.
 
-## Installation
+## Quick Start
 
 Requires Node.js 20+.
 
@@ -43,11 +54,6 @@ Requires Node.js 20+.
 git clone https://github.com/lowjieseng1810/openatlas-globe.git
 cd openatlas-globe
 npm install
-```
-
-## Quick Start
-
-```bash
 npm run dev
 ```
 
@@ -60,8 +66,8 @@ npm run preview
 
 ## Usage
 
-1. Mount a `#globe-stage` element (required by the extracted renderer).
-2. Optionally provide `#explore-world-button` to trigger the cinematic fly-to.
+1. Mount a `#globe-stage` element (required by the renderer).
+2. Optionally provide `#explore-world-button` for cinematic fly-to and `#auto-rotate` for axial spin.
 3. Set focus coordinates before the globe boots:
 
 ```ts
@@ -71,13 +77,13 @@ window.OPENATLAS_GLOBE = {
 };
 ```
 
-4. After `earthExplorerReady`, use `window.EarthExplorer.projectLatLon(lat, lon)` to place HTML markers.
+4. After `earthExplorerReady`, use `window.EarthExplorer.projectLatLon(lat, lon)` to place HTML markers, and `setAutoRotate(boolean)` to control idle spin.
 
 The demo does this in `src/main.ts` and `src/demo/markers.ts`.
 
-## Data format
+## Data Format
 
-Generic points, not a Malaysia-only schema:
+Generic points, not a country-specific schema:
 
 ```json
 [
@@ -92,64 +98,58 @@ Generic points, not a Malaysia-only schema:
 ]
 ```
 
-Replace `public/data/example-cities.json` with your own file. Default markers are generic cities for the reusable marker system, not a language map.
+Replace `public/data/example-cities.json` with your own file. Default markers are generic cities (Cairo, Reykjavík, Wellington).
 
-## Customization
-
-| Option | Where | Effect |
-| --- | --- | --- |
-| `focusLat` / `focusLon` | `window.OPENATLAS_GLOBE` | Fly-to target and 3D focus marker |
-| `assetBaseUrl` | `window.OPENATLAS_GLOBE` | Override texture directory |
-| Textures | `public/textures/earth/` | Day / normal / specular / clouds |
-| Marker dataset | `public/data/*.json` | Any lat/lon collection |
-| Demo chrome | `index.html`, `src/demo/styles.css` | Layout only; does not change shaders |
-
-## Project structure
+## Architecture
 
 ```
 openatlas-globe/
-  index.html                 # demo page
-  public/textures/earth/     # Earth maps copied from the source project
+  index.html                 # demo page / introduction
+  public/textures/earth/     # Earth maps
   public/data/               # example geographic JSON
-  src/globe/earth-globe.js   # extracted renderer (original shaders/scene)
+  src/globe/earth-globe.js   # Three.js renderer, shaders, lighting, drag, fly-to
+  src/globe/spin.ts          # auto-rotate timing helpers
   src/globe/geo.ts           # lat/lon helpers + JSON parser
-  src/demo/                  # new standalone UI / markers
+  src/demo/                  # standalone UI / markers
   src/config.ts              # demo focus coordinates
   ATTRIBUTIONS.md
   LICENSE
 ```
 
-## Screenshots
+The Earth mesh rotates around its polar axis for auto-rotate. A distant sun position drives shader lighting, so the day/night terminator moves as the planet turns. Pointer drag pauses auto-rotate and either orbits the camera (idle) or yaws the planet group (after fly-to).
 
-Add screenshots under `docs/screenshots/` when available.
+## Customization
 
-## Examples
+| Option | Where | Effect |
+| --- | --- | --- |
+| `focusLat` / `focusLon` | `window.OPENATLAS_GLOBE` | Fly-to target |
+| `assetBaseUrl` | `window.OPENATLAS_GLOBE` | Override texture directory |
+| Textures | `public/textures/earth/` | Day / normal / specular / clouds |
+| Marker dataset | `public/data/*.json` | Any lat/lon collection |
+| Demo chrome | `index.html`, `src/demo/styles.css` | Layout only |
 
-- **Generic cities** — bundled `example-cities.json` (Cairo, Reykjavík, Wellington) to demonstrate lat/lon markers.
-- **Cultural heritage / migration / education / research / historical routes** — same JSON shape; only coordinates and copy change.
+## Technology
+
+- TypeScript (demo shell, data helpers, tests)
+- Three.js `0.128.0`
+- Vite
+- HTML/CSS for the demo chrome
 
 ## Performance
 
-- Default day map is the original `earth_day_8k.jpg` (~4.5 MB). First load is texture-bound.
-- Pixel ratio is capped at 2 (preserved from the source renderer).
+- Default day map is `earth_day_8k.jpg` (~4.5 MB). First load is texture-bound.
+- Pixel ratio is capped at 2.
+- Auto-rotate uses the existing `requestAnimationFrame` loop (no extra loops).
 - For weaker devices, swap in a smaller day texture via `public/textures/earth/`.
 
 ## Origin & Attribution
 
-OpenAtlas Globe was **extracted and refactored** from the 3D Earth / World Explorer implementation originally developed for **Malaysia Linguistics Lab**.
+The renderer is derived from the World Explorer Earth implementation originally developed for Malaysia Linguistics Lab, extracted so it can run as a standalone geographic globe.
 
 - Original GitHub repository: [https://github.com/lowjieseng1810/malaysia-linguistics-lab](https://github.com/lowjieseng1810/malaysia-linguistics-lab)
 - Original website: [https://malaysialinguisticlab.com/](https://malaysialinguisticlab.com/)
 
-This repository contains reusable code **derived from** that Earth / World Explorer. It was **not** originally created as OpenAtlas Globe.
-
-| Kind | What |
-| --- | --- |
-| Original extracted code | `src/globe/earth-globe.js` (from `static/js/earth-globe.js`), Earth textures under `public/textures/earth/`, lat/lon sphere math, atmosphere/cloud/starfield/lighting/camera/drag/flight |
-| Refactored code | ES module + `three` npm import; configurable focus lat/lon and texture base URL; app-specific fallback copy removed; unused moon texture not shipped |
-| Newly added code | Vite/TypeScript demo shell, generic JSON markers, `geo.ts` helpers/tests, this README, ATTRIBUTIONS |
-
-The source Malaysia Linguistics Lab application (Flask, auth, AI tutor, lessons, dictionary, quizzes) is **not** part of this repository.
+See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for textures and third-party notices.
 
 ## Contributing
 
@@ -158,5 +158,3 @@ Issues and pull requests are welcome. Keep changes focused on the globe runtime 
 ## License
 
 MIT License. See [LICENSE](LICENSE).
-
-Third-party and bundled assets: [ATTRIBUTIONS.md](ATTRIBUTIONS.md).

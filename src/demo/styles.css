@@ -14,6 +14,7 @@ html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+  overflow-x: hidden;
   background: #02060c;
   color: var(--text);
 }
@@ -44,9 +45,42 @@ html, body {
 }
 
 .sidebar h1 {
-  margin: 8px 0 12px;
-  font-size: 1.8rem;
+  margin: 8px 0 8px;
+  font-size: 1.72rem;
   letter-spacing: 0.02em;
+}
+
+.lede {
+  color: var(--text) !important;
+  font-size: 1.02rem;
+  margin: 0 0 12px;
+}
+
+.oa-note {
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(215, 180, 92, 0.14);
+  background: rgba(7, 16, 24, 0.55);
+}
+
+.oa-note h2 {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 650;
+}
+
+.oa-note p {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
 }
 
 .eyebrow {
@@ -81,6 +115,29 @@ button, .ghost {
   padding: 10px 16px;
   cursor: pointer;
   font-weight: 650;
+  font: inherit;
+}
+
+button:focus-visible,
+.ghost:focus-visible,
+.atlas-marker:focus-visible {
+  outline: 2px solid #f0d48a;
+  outline-offset: 3px;
+}
+
+.oa-toggle {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.oa-toggle[aria-pressed="true"] {
+  border-color: rgba(215, 180, 92, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(215, 180, 92, 0.25);
+}
+
+.oa-toggle[aria-pressed="false"] {
+  color: var(--muted);
 }
 
 #explore-world-button {
@@ -186,10 +243,14 @@ pre {
     min-height: 100dvh;
   }
   .sidebar {
-    max-height: 34vh;
+    max-height: 38vh;
+    padding: 16px 16px 20px;
   }
   .stage-wrap {
-    min-height: 66vh;
-    height: 66vh;
+    min-height: 62vh;
+    height: 62vh;
+  }
+  .cta-row {
+    margin: 14px 0 16px;
   }
 }

@@ -19,6 +19,8 @@ export type EarthExplorerApi = {
   isHeroReady: () => boolean;
   getDomElement: () => HTMLCanvasElement;
   getContainer: () => HTMLElement;
+  isAutoRotate: () => boolean;
+  setAutoRotate: (enabled: boolean) => boolean;
   projectLatLon: (
     latDeg: number,
     lonDeg: number,

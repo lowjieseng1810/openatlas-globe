@@ -8,21 +8,45 @@
   <body>
     <div class="page">
       <aside class="sidebar">
-        <p class="eyebrow">Open-source geographic globe</p>
+        <p class="eyebrow">Open-source 3D Earth</p>
         <h1>OpenAtlas Globe</h1>
+        <p class="lede">
+          An open-source, reusable 3D Earth for geographic exploration.
+        </p>
         <p>
-          A reusable 3D Earth extracted from the World Explorer in
-          <a href="https://github.com/lowjieseng1810/malaysia-linguistics-lab">Malaysia Linguistics Lab</a>.
-          Drag to rotate. Optional fly-to uses a generic world focus, not a country-specific language map.
+          Interactive Three.js globe with realistic terrain and ocean textures,
+          atmosphere, clouds, and a live day/night terminator. Markers are
+          JSON-driven geographic points. No backend required.
         </p>
         <div class="cta-row">
-          <button id="explore-world-button" type="button">Fly to example region</button>
+          <button id="explore-world-button" type="button">
+            Fly to example region
+          </button>
+          <button
+            id="auto-rotate"
+            type="button"
+            class="oa-toggle"
+            aria-pressed="true"
+            aria-label="Auto rotate Earth"
+          >
+            Auto rotate: On
+          </button>
           <a class="ghost" href="https://github.com/lowjieseng1810/openatlas-globe">GitHub</a>
         </div>
+        <section class="oa-note" aria-labelledby="daynight-title">
+          <h2 id="daynight-title">Day &amp; Night</h2>
+          <p>
+            OpenAtlas Globe simulates sunlight across the Earth's surface,
+            creating a continuously changing day/night boundary as the planet
+            rotates.
+          </p>
+        </section>
         <h2>Features</h2>
         <ul>
-          <li>Cinematic Earth, atmosphere, clouds, and starfield</li>
-          <li>Pointer drag with inertia</li>
+          <li>Interactive 3D Earth with realistic textures</li>
+          <li>Atmosphere, clouds, and starfield</li>
+          <li>Day/night lighting on the sphere</li>
+          <li>Optional automatic axial rotation</li>
           <li>Generic lat/lon markers from JSON</li>
           <li>No backend, database, auth, or AI</li>
         </ul>

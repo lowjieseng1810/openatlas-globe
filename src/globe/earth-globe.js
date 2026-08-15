@@ -14,6 +14,7 @@
  * interaction, cinematic reveal, and flight math are preserved.
  */
 import * as THREE from "three";
+import { earthSpinDelta, shouldAutoRotateEarth } from "./spin";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -1362,9 +1363,9 @@ const earthMaterial =
 
 
                 dayColor *=
-    0.095 +
+    0.18 +
     softDiffuse *
-    1.04;
+    1.08;
 
 
                 dayColor *=
@@ -1411,20 +1412,22 @@ const earthMaterial =
                    TRUE DARK SIDE
                    ================================= */
 
+                /* Night keeps geographic albedo readable instead of
+                   collapsing to a black hemisphere. */
                 vec3 darkEarth =
                     rawDay *
                     vec3(
-                        0.004,
-                        0.007,
-                        0.012
+                        0.20,
+                        0.23,
+                        0.30
                     );
 
 
                 darkEarth +=
                     vec3(
-                        0.0008,
-                        0.002,
-                        0.005
+                        0.012,
+                        0.022,
+                        0.045
                     );
 
 
@@ -1436,7 +1439,7 @@ const earthMaterial =
                     1.0 -
                     smoothstep(
                         0.0,
-                        0.12,
+                        0.18,
                         abs(
                             NdotL
                         )
@@ -1445,12 +1448,12 @@ const earthMaterial =
 
                 vec3 terminatorGlow =
                     vec3(
-                        0.30,
-                        0.055,
-                        0.008
+                        0.55,
+                        0.22,
+                        0.06
                     ) *
                     terminator *
-                    0.15;
+                    0.28;
 
 
                 /* =================================
@@ -1652,7 +1655,7 @@ const atmosphereMaterial =
                     vec3(0.62, 0.82, 1.0);
 
                 vec3 nightColor =
-                    vec3(0.22, 0.38, 0.62);
+                    vec3(0.28, 0.42, 0.68);
 
                 vec3 atmosphereColor =
                     mix(
@@ -1680,8 +1683,8 @@ const atmosphereMaterial =
                 float alpha =
                     rim *
                     (
-                        0.055 +
-                        daylight * 0.11
+                        0.07 +
+                        daylight * 0.10
                     );
 
                 alpha +=
@@ -2109,10 +2112,10 @@ scene.add(
      facing once MALAYSIA_FRONT_YAW is computed below. */
   /* Keep near canvas center — large X offset foreshortens into an oval. */
   earthSystem.position.set(
-    0.12,
-    -0.02,
+    0,
+    0,
     0
-);
+  );
 
 earthSystem.scale.setScalar(
     1.24
@@ -2397,6 +2400,8 @@ earthSystem.rotation.z =
         MALAYSIA_FRONT_YAW + IDLE_SEA_YAW_OFFSET;
     earthSystem.rotation.z = -0.05;
     earth.rotation.y = 0;
+    let autoRotateEnabled = true;
+    let lastAnimateTime = 0;
     
         /*
        earth.rotation.y (the mesh's own idle
@@ -3021,7 +3026,7 @@ console.log(
         const fit = Math.min(1.12, Math.max(0.78, minDim / 780));
         if (typeof earthSystem !== "undefined" && earthSystem) {
             earthSystem.scale.setScalar(fit);
-            earthSystem.position.set(width < 720 ? 0 : 0.06, 0, 0);
+            earthSystem.position.set(0, 0, 0);
         }
     }
 
@@ -3370,6 +3375,22 @@ if (heroLoaded) {
         }
 
 
+        const dtSeconds =
+            lastAnimateTime > 0
+                ? Math.min(0.05, (time - lastAnimateTime) / 1000)
+                : 0;
+        lastAnimateTime = time;
+
+        if (
+            shouldAutoRotateEarth({
+                enabled: autoRotateEnabled,
+                dragging: dragging,
+                flightActive: flightActive,
+            })
+        ) {
+            earth.rotation.y += earthSpinDelta(dtSeconds);
+        }
+
         if (!flightActive && heroState !== HERO_STATE.REVEAL) {
             if (!dragging) {
                 targetYaw += dragVelocityYaw;
@@ -3387,14 +3408,10 @@ if (heroLoaded) {
 
             viewYaw += (targetYaw - viewYaw) * 0.06;
             viewPitch += (targetPitch - viewPitch) * 0.06;
-
-            if (!dragging) {
-                /* Slow idle spin — keep SEA readable longer on first view. */
-                earth.rotation.y += 0.00055;
-            }
         }
 
-        /* After Malaysia arrival: keep camera, let the user spin the planet. */
+        /* After fly-to: camera stays put; drag orbits the planet group.
+           Auto-rotate continues on the Earth mesh itself. */
         if (!flightActive && heroState === HERO_STATE.REVEAL) {
             if (!dragging) {
                 revealSpinYaw += dragVelocityYaw;
@@ -3405,10 +3422,6 @@ if (heroLoaded) {
                     -0.45,
                     Math.min(0.45, revealSpinPitch)
                 );
-                /* Soft idle spin only until the user takes control. */
-                if (!revealUserInteracted) {
-                    revealSpinYaw += 0.00055;
-                }
             }
 
             earthSystem.rotation.y = revealSpinYaw;
@@ -3755,6 +3768,13 @@ if (
         },
         getContainer: function () {
             return globeContainer;
+        },
+        isAutoRotate: function () {
+            return !!autoRotateEnabled;
+        },
+        setAutoRotate: function (enabled) {
+            autoRotateEnabled = !!enabled;
+            return autoRotateEnabled;
         },
         /* Test/helper: spin the Earth mesh so lat/lon projections must move. */
         _nudgeYaw: function (amount) {
